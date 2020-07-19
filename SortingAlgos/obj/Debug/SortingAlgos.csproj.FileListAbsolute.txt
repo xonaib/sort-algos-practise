@@ -1,0 +1,6 @@
+C:\Code\TestCode\SortingAlgos\SortingAlgos\bin\Debug\SortingAlgos.exe.config
+C:\Code\TestCode\SortingAlgos\SortingAlgos\bin\Debug\SortingAlgos.exe
+C:\Code\TestCode\SortingAlgos\SortingAlgos\bin\Debug\SortingAlgos.pdb
+C:\Code\TestCode\SortingAlgos\SortingAlgos\obj\Debug\SortingAlgos.csprojAssemblyReference.cache
+C:\Code\TestCode\SortingAlgos\SortingAlgos\obj\Debug\SortingAlgos.exe
+C:\Code\TestCode\SortingAlgos\SortingAlgos\obj\Debug\SortingAlgos.pdb
