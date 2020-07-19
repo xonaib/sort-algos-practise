@@ -20,7 +20,7 @@ namespace SortingAlgos
 
             //items = MergeSort.getInstance().Sort(items);
 
-            items = new List<int> { 10, 15, 5 };
+            //items = new List<int> { 10, 15, 5 };
             //PrintItems(items);
             var tree = new BinarySearchTree<int>();
             tree.Add(items);

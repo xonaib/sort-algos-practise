@@ -44,8 +44,42 @@ namespace SortingAlgos.DataStructures
             Insert(Root, item);
         }
 
+        public void Insert(BinaryItem<T> current, T item)
+        {
+            BinaryItem<T> after = current;
+            BinaryItem<T> before = null;
+            // find place to insert into tree
+            while (after != null)
+            {
+                before = after;
+                
+                int comparison = item.CompareTo(current.Value);
+                if(comparison <= 0)
+                {
+                    // keep finding until we find a null element
+                    after = after.Left;
+                }
+                else
+                {
+                    after = after.Right;
+                }
+            }
+
+            var newNode = new BinaryItem<T>(item);
+            int currentComparison = item.CompareTo(before.Value);
+            if(currentComparison <= 0)
+            {
+                before.Left = newNode;
+            }
+            else
+            {
+                before.Right = newNode;
+            }
+
+        }
+
         /** Recursive call to insert element in tree */
-        public BinaryItem<T> Insert(BinaryItem<T> current, T item)
+        public BinaryItem<T> Insert2(BinaryItem<T> current, T item)
         {
             if(current == null)
             {
@@ -57,13 +91,13 @@ namespace SortingAlgos.DataStructures
             if (comparison <= 0)
             {
                 // insert at left of tree
-                current.Left = Insert(current.Left, item);
+                current.Left = Insert2(current.Left, item);
                 return current.Left;
             }
             else
             {
                 // insert at right of node
-                current.Right = Insert(current.Right, item);
+                current.Right = Insert2(current.Right, item);
                 return current.Right;
             }
         }
