@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,7 +45,7 @@ namespace SortingAlgos.DataStructures
             Insert(Root, item);
         }
 
-        public void Insert(BinaryItem<T> current, T item)
+        public void Insert3(BinaryItem<T> current, T item)
         {
             BinaryItem<T> after = current;
             BinaryItem<T> before = null;
@@ -52,9 +53,9 @@ namespace SortingAlgos.DataStructures
             while (after != null)
             {
                 before = after;
-                
+
                 int comparison = item.CompareTo(current.Value);
-                if(comparison <= 0)
+                if (comparison <= 0)
                 {
                     // keep finding until we find a null element
                     after = after.Left;
@@ -67,7 +68,7 @@ namespace SortingAlgos.DataStructures
 
             var newNode = new BinaryItem<T>(item);
             int currentComparison = item.CompareTo(before.Value);
-            if(currentComparison <= 0)
+            if (currentComparison <= 0)
             {
                 before.Left = newNode;
             }
@@ -79,9 +80,9 @@ namespace SortingAlgos.DataStructures
         }
 
         /** Recursive call to insert element in tree */
-        public BinaryItem<T> Insert2(BinaryItem<T> current, T item)
+        public BinaryItem<T> Insert(BinaryItem<T> current, T item)
         {
-            if(current == null)
+            if (current == null)
             {
                 current = new BinaryItem<T>(item);
                 return current;
@@ -91,15 +92,20 @@ namespace SortingAlgos.DataStructures
             if (comparison <= 0)
             {
                 // insert at left of tree
-                current.Left = Insert2(current.Left, item);
-                return current.Left;
+                current.Left = Insert(current.Left, item);
+                //return current.Left;
             }
             else
             {
-                // insert at right of node
-                current.Right = Insert2(current.Right, item);
-                return current.Right;
+                current.Right = Insert(current.Right, item);
+                //return current.Right;
             }
+
+            // return current, instead of left or right, because
+            // being called recursively, we need to remeber the path traversed to reach here
+            // if we return left or right, we keep returning the element where we insert into tree
+            // which will remove all nodes in tree
+            return current;
         }
 
         public void Print()
@@ -132,6 +138,7 @@ namespace SortingAlgos.DataStructures
         public T FindDFS(T value) { return default(T); }
     }
 
+    // Interface
     public interface IBinaryTree<T> where T : IComparable<T>
     {
         void Add(List<T> items);
@@ -163,7 +170,35 @@ namespace SortingAlgos.DataStructures
         T FindDFS(T value);
     }
 
+    
+
+    [DebuggerDisplay("Value = {Value}")]
+    public class BinaryItem<T>
+    {
+        public BinaryItem()
+        {
+            Left = null;
+            Right = null;
+        }
+        public BinaryItem(T value)
+        {
+            Value = value;
+            Left = null;
+            Right = null;
+        }
+
+        public T Value { get; set; }
+        public BinaryItem<T> Left { get; set; }
+        public BinaryItem<T> Right { get; set; }
+
+        public static V ConvertValue<V, U>(U value) where U : IConvertible
+        {
+            return (V)Convert.ChangeType(value, typeof(V));
+        }
+    }
+
     // https://stackoverflow.com/a/36496436/2148050
+    // Binary Tree Printer
     public static class BTreePrinter<T>
     {
         public class NodeInfo
@@ -263,38 +298,5 @@ namespace SortingAlgos.DataStructures
             Console.BackgroundColor = color;
         }
     }
-
-    //class NodeInfo<T>
-    //{
-    //    public BinaryItem<T> Node;
-    //    public string Text;
-    //    public int StartPos;
-    //    public int Size { get { return Text.Length; } }
-    //    public int EndPos { get { return StartPos + Size; } set { StartPos = value - Size; } }
-    //    public NodeInfo<T> Parent, Left, Right;
-    //}
-
-    public class BinaryItem<T>
-    {
-        public BinaryItem()
-        {
-            Left = null;
-            Right = null;
-        }
-        public BinaryItem(T value)
-        {
-            Value = value;
-            Left = null;
-            Right = null;
-        }
-
-        public T Value { get; set; }
-        public BinaryItem<T> Left { get; set; }
-        public BinaryItem<T> Right { get; set; }
-
-        public static V ConvertValue<V, U>(U value) where U : IConvertible
-        {
-            return (V)Convert.ChangeType(value, typeof(V));
-        }
-    }
 }
+
